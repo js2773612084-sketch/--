@@ -12,11 +12,11 @@
       height: 100vh;
       overflow: hidden;
       font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-      background: #fff1f2;
+      background-color: #fff1f2;
       color: #881337;
     }
 
-    /* 甜蜜粉色渐变背景 */
+    /* 粉色流动渐变背景 */
     .main-container {
       position: relative;
       width: 100%;
@@ -24,14 +24,33 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at center, #ffe4e6 0%, #fbcfe8 100%);
+      background: linear-gradient(270deg, #ffe4e6, #fff1f2, #ffe4e6, #fff1f2, #ffe4e6);
+      background-size: 800% 800%;
+      animation: movingGradient 30s ease infinite;
     }
 
-    /* 伪装卡片 */
+    @keyframes movingGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 动态 Canvas 爱心雨 */
+    #heartCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* 伪装磨砂玻璃卡片 */
     .glass-card {
       position: relative;
       z-index: 10;
-      background: rgba(255, 255, 255, 0.82);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 2px solid #f43f5e;
@@ -42,7 +61,61 @@
       max-width: 38rem;
       width: 90%;
       box-sizing: border-box;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: vividPulse 8s infinite alternate;
+    }
+
+    @keyframes vividPulse {
+      0% { transform: scale(1); box-shadow: 0 15px 35px rgba(244, 63, 94, 0.15); }
+      100% { transform: scale(1.02); box-shadow: 0 15px 45px rgba(244, 63, 94, 0.25); }
+    }
+
+    /* 双栏合并终极卡片样式 */
+    .glass-card.final-layout {
+      max-width: 52rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 2rem;
+      padding: 2.5rem;
+      text-align: left;
+    }
+
+    .final-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .final-right {
+      width: 240px;
+      flex-shrink: 0;
+    }
+
+    .final-photo {
+      width: 100%;
+      border-radius: 16px;
+      border: 3px solid #f43f5e;
+      box-shadow: 0 8px 24px rgba(244, 63, 94, 0.3);
+      animation: photoBounce 4s ease-in-out infinite;
+    }
+
+    @keyframes photoBounce {
+      0%, 100% { transform: translateY(0) rotate(2deg); }
+      50% { transform: translateY(-8px) rotate(-2deg); }
+    }
+
+    @media (max-width: 768px) {
+      .glass-card.final-layout {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1.5rem;
+      }
+      .final-right {
+        width: 180px;
+        margin-top: 1rem;
+      }
     }
 
     h1 {
@@ -50,6 +123,12 @@
       color: #e11d48;
       margin-top: 0;
       margin-bottom: 1.5rem;
+      animation: vividTilt 6s infinite ease-in-out;
+    }
+
+    @keyframes vividTilt {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(1deg); }
     }
 
     .subtitle {
@@ -78,6 +157,7 @@
       cursor: pointer;
       font-weight: bold;
       transition: all 0.2s ease;
+      position: relative;
     }
 
     .btn-primary {
@@ -96,7 +176,21 @@
       border: 1px solid #fda4af;
     }
 
-    /* 恶搞输入框 */
+    button::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      width: calc(100% + 20px);
+      height: calc(100% + 20px);
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    button:hover::after { opacity: 1; }
+
+    /* 输入框 */
     .fake-input {
       width: 100%;
       padding: 1rem;
@@ -108,18 +202,37 @@
       box-sizing: border-box;
       outline: none;
       text-align: center;
+      transition: all 0.3s ease;
+    }
+    .fake-input:focus {
+      border-color: #f43f5e;
+      box-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
     }
 
-    /* 扫描动画 */
-    .radar-box {
+    /* 扫描器 */
+    .radar-container {
       position: relative;
-      width: 150px;
-      height: 150px;
+      width: 160px;
+      height: 160px;
       margin: 0 auto 20px;
+    }
+    .radar-box {
+      position: absolute;
+      inset: 0;
       border: 3px solid #fda4af;
       border-radius: 50%;
       overflow: hidden;
       background: #fff1f2;
+      z-index: 2;
+    }
+    .radar-face-preview {
+      position: absolute;
+      inset: 5px;
+      border-radius: 50%;
+      object-fit: cover;
+      filter: blur(15px); /* 初始极度模糊 */
+      transition: filter 4s linear;
+      z-index: 1;
     }
     .radar-line {
       position: absolute;
@@ -127,16 +240,17 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(to bottom, rgba(244,63,94,0), rgba(244,63,94,0.4));
-      animation: scan 2s linear infinite;
+      background: linear-gradient(to bottom, rgba(244,63,94,0), rgba(244,63,94,0.5));
+      animation: scan 1.5s linear infinite;
       transform-origin: bottom center;
+      z-index: 3;
     }
     @keyframes scan {
-      0% { transform: translateY(-150px); }
-      100% { transform: translateY(150px); }
+      0% { transform: translateY(-160px); }
+      100% { transform: translateY(160px); }
     }
 
-    /* 权限复选框样式 */
+    /* 协议勾选 */
     .permission-item {
       display: flex;
       align-items: center;
@@ -175,7 +289,7 @@
       transform: translateX(24px);
     }
 
-    /* 粉色警告弹窗 */
+    /* 警告弹窗 */
     .alert-popup {
       position: absolute;
       width: 280px;
@@ -186,8 +300,14 @@
       box-shadow: 0 20px 25px -5px rgba(159, 18, 57, 0.2);
       color: #991b1b;
       z-index: 99999;
+      animation: vividPopup 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+    @keyframes vividPopup {
+      0% { transform: scale(0.1) rotate(-10deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
     }
 
+    /* 进度条 */
     .progress-bound {
       width: 100%;
       height: 16px;
@@ -214,7 +334,8 @@
 <body>
 
   <div class="main-container" id="stageContainer">
-    <!-- 主卡片 -->
+    <canvas id="heartCanvas"></canvas>
+
     <div class="glass-card" id="mainCard">
       <h1>🌸 520 情感账户核心资产审查</h1>
       <p class="subtitle">
@@ -232,6 +353,57 @@
 
   <script>
     const mainCard = document.getElementById('mainCard');
+    const canvas = document.getElementById('heartCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // 你的专属恶搞照片文件名定义
+    const MY_PHOTO = "sun.jpg";
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Canvas 爱心粒子发射系统
+    const hearts = [];
+    class Heart {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = -Math.random() * canvas.height;
+        this.size = Math.random() * 20 + 12;
+        this.speed = Math.random() * 2 + 1.5;
+        this.drift = Math.sin(Math.random() * 2) * 0.4;
+        this.color = Math.random() < 0.6 ? '#f43f5e' : '#fda4af';
+        this.opacity = Math.random() * 0.5 + 0.4;
+      }
+      update() {
+        this.y += this.speed;
+        this.x += this.drift;
+        if (this.y > canvas.height) {
+          this.y = -this.size;
+          this.x = Math.random() * canvas.width;
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.font = `${this.size}px serif`;
+        ctx.fillText('❤️', this.x, this.y);
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < 55; i++) { hearts.push(new Heart()); }
+
+    function animateHearts() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hearts.forEach(h => { h.update(); h.draw(); });
+      requestAnimationFrame(animateHearts);
+    }
+    animateHearts();
 
     // ==================== 关卡 1：拒绝者的无休止弹窗 ====================
     let rejectCount = 0;
@@ -289,7 +461,7 @@
     document.getElementById('btnYes').onclick = startStage2;
     initPrank();
 
-    // ==================== 关卡 2：打字机流氓控制（真心话流氓输入） ====================
+    // ==================== 关卡 2：真心话流氓输入 ====================
     function startStage2() {
       document.querySelectorAll('.alert-popup').forEach(p => p.remove());
       
@@ -307,16 +479,14 @@
       const btnEl = document.getElementById('btnStage2');
       let currentLength = 0;
 
-      // 劫持键盘输入
       inputEl.addEventListener('keydown', (e) => {
-        e.preventDefault(); // 阻止用户真正输入的字符
-        
+        e.preventDefault();
         if (e.key === 'Backspace') {
           if (currentLength > 0) {
             currentLength--;
             inputEl.value = targetText.substring(0, currentLength);
           }
-        } else if (e.key.length === 1 || e.key === 'Process') { // 兼容中英文输入法敲击
+        } else if (e.key.length === 1 || e.key === 'Process') {
           if (currentLength < targetText.length) {
             currentLength++;
             inputEl.value = targetText.substring(0, currentLength);
@@ -334,19 +504,26 @@
       btnEl.onclick = startStage3;
     }
 
-    // ==================== 关卡 3：AI 偏好人脸透视（假面扫描） ====================
+    // ==================== 关卡 3：AI 偏好人脸透视（增加模糊照片渐显效果） ====================
     function startStage3() {
       mainCard.innerHTML = `
         <h1>📷 第二轨：AI 脸部多巴胺扫描</h1>
         <p class="subtitle" style="margin-bottom:1.5rem;">系统正在尝试调用前置摄像头，分析您的面部异性吸引力指数...</p>
-        <div class="radar-box">
-          <div class="radar-line"></div>
-          <div style="font-size:50px; line-height:150px; text-align:center;">👤</div>
+        <div class="radar-container">
+          <div class="radar-box">
+            <div class="radar-line"></div>
+            <img src="${MY_PHOTO}" class="radar-face-preview" id="radarImg">
+          </div>
         </div>
         <p id="scanStatus" style="font-weight:bold; color:#db2777;">正在捕捉面部轮廓，请正对屏幕并保持微笑...</p>
       `;
 
       const statusText = document.getElementById('scanStatus');
+      const radarImg = document.getElementById('radarImg');
+      
+      // 随着时间推移，扫描框里的照片逐渐稍微清晰一点点
+      setTimeout(() => { if(radarImg) radarImg.style.filter = "blur(6px)"; }, 1500);
+
       const phases = [
         "正在扫描胶原蛋白流失速度...",
         "正在分析单身狗特有的傲娇眼神...",
@@ -357,9 +534,7 @@
       phases.forEach((text, index) => {
         setTimeout(() => {
           if(statusText) statusText.innerText = text;
-          if(index === phases.length - 1) {
-            showScanResult();
-          }
+          if(index === phases.length - 1) { showScanResult(); }
         }, (index + 1) * 1200);
       });
     }
@@ -404,11 +579,9 @@
 
       btnToggle.onclick = () => {
         toggleCount++;
-        if(toggleCount === 1) {
-          btnToggle.innerText = "拒绝失败";
-        } else if(toggleCount === 2) {
-          btnToggle.innerText = "你想得美";
-        } else {
+        if(toggleCount === 1) { btnToggle.innerText = "拒绝失败"; } 
+        else if(toggleCount === 2) { btnToggle.innerText = "你想得美"; } 
+        else {
           btnToggle.style.display = "none";
           document.getElementById('trapText').innerHTML = "允许520当天无条件向站长发放节日红包 🧧 <b style='color:#ef4444;'>(已强行锁定)</b>";
         }
@@ -437,16 +610,12 @@
 
       const progressBar = document.getElementById('progressBar');
       const progressText = document.getElementById('progressText');
-      
       let width = 0;
       let textIndex = 0;
 
       const interval = setInterval(() => {
-        if (width < 82) {
-          width += Math.random() * 5;
-        } else if (width >= 82 && width < 99) {
-          width += Math.random() * 0.4; // 极度变慢
-        }
+        if (width < 82) { width += Math.random() * 5; } 
+        else if (width >= 82 && width < 99) { width += Math.random() * 0.4; }
 
         progressBar.style.width = `${width}%`;
         
@@ -454,44 +623,47 @@
           progressText.innerText = loadingTexts[Math.floor(Math.random() * loadingTexts.length)];
         }
 
-        // 卡死在 99%
         if (width >= 99) {
           clearInterval(interval);
           progressBar.style.width = '99%';
           progressText.innerHTML = `⚠️ <span style="color:#ef4444; font-weight:bold;">Fatal Error：由于用户颜值突破天际，核心机房被萌烧了！</span>`;
-          
-          setTimeout(() => {
-            triggerFinalShock();
-          }, 2600);
+          setTimeout(() => { triggerFinalShock(); }, 2600);
         }
       }, 90);
     }
 
-    // ==================== 终极降维打击（小丑反转） ====================
+    // ==================== 终极小丑反转（加入双栏照片展示） ====================
     function triggerFinalShock() {
-      mainCard.style.maxWidth = "42rem";
+      // 改变布局为炫酷的高级分栏展示
+      mainCard.classList.add('final-layout');
       mainCard.style.border = "3px solid #ec4899";
       mainCard.style.boxShadow = "0 0 50px rgba(236, 72, 153, 0.4)";
 
       mainCard.innerHTML = `
-        <h1 style="font-size: 6rem; margin: 0;">🤡</h1>
-        <h2 style="color:#db2777; font-size:2.5rem; margin-top:10px;">密保验证失败！</h2>
-        <p style="font-size:1.25rem; line-height:1.8; color:#4c0519; margin:20px 0;">
-          经过五轨全方位深度测试，系统最终判定：<br>
-          <span style="color:#e11d48; font-weight:bold;">【嘴硬天花板】 【自恋大宗师】 【全自动发红包机】</span><br>
-          折腾了这么久，原来小丑竟是你自己！
-        </p>
-        <div style="background: rgba(244,63,94,0.06); padding: 15px; border-radius: 12px; text-align: left; font-size: 0.95rem; color: #881337; line-height: 1.6; border: 1px dashed #fbcfe8;">
-          📢 <b style="color:#e11d48;">粉色特赦令：</b><br>
-          鉴于你如此有耐心地闯完了所有恶搞关卡，特此免除本年度单身罚款。520 没什么送你的，送你一个大大的清醒大白眼！哈哈哈520快乐！
+        <div class="final-left">
+          <h1 style="font-size: 3.5rem; margin: 0; display: inline-block;">🤡</h1>
+          <h2 style="color:#db2777; font-size:2.2rem; margin: 5px 0 15px 0;">密保验证彻底失败！</h2>
+          <p style="font-size:1.15rem; line-height:1.7; color:#4c0519; margin: 0 0 15px 0;">
+            经过五轨全方位深度测试，系统最终判定：<br>
+            <span style="color:#e11d48; font-weight:bold;">【嘴硬天花板】 【自恋大宗师】 【全自动发红包机】</span><br>
+            折腾了这么久，原来小丑竟是你自己！
+          </p>
+          <div style="background: rgba(244,63,94,0.06); padding: 12px 15px; border-radius: 12px; font-size: 0.95rem; color: #881337; line-height: 1.6; border: 1px dashed #fbcfe8;">
+            📢 <b style="color:#e11d48;">粉色特赦令：</b><br>
+            鉴于你如此有耐心地闯完了所有流氓关卡，特此免除本年度单身罚款。520 没什么送你的，送你一个大大的清醒大白眼！哈哈哈520快乐！
+          </div>
+          <button id="btnEnd" class="btn-primary" style="margin-top: 20px; width: 100%;">
+            我不服！我要截图找你算账 😤
+          </button>
         </div>
-        <button id="btnEnd" class="btn-primary" style="margin-top: 25px; width: 100%;">
-          我不服！我要截图找你算账 😤
-        </button>
+        <div class="final-right">
+          <img src="${MY_PHOTO}" alt="小丑本人" class="final-photo">
+          <p style="text-align:center; font-size:0.85rem; color:#db2777; font-weight:bold; margin-top:8px;">☝️ 涉案嫌疑人高清抓拍档案</p>
+        </div>
       `;
 
       document.getElementById('btnEnd').addEventListener('click', () => {
-        alert("🚨 情感中心提示：\n截图已秘密保存到你的脑海中！\n好啦不闹了，祝你 520 每天都开开心心，今天也要保持快乐哈！");
+        alert("🚨 情感中心核心提示：\n嫌疑人照片及本次嘴硬数据已无缝上传至本地回忆中心！\n好啦不闹了，祝你 520 每一天都开开心心，今天也要保持快乐哈！");
       });
     }
   </script>
