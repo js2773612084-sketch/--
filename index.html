@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI智能告白系统</title>
+  <title>520 情感账户全面资产审查</title>
   <style>
-    /* 基础重置与背景 */
     body, html {
       margin: 0;
       padding: 0;
       width: 100%;
       height: 100vh;
       overflow: hidden;
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: #fff1f2;
+      color: #881337;
     }
 
+    /* 甜蜜粉色渐变背景 */
     .main-container {
       position: relative;
       width: 100%;
@@ -22,346 +24,476 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(to bottom right, #ec4899, #fb7185, #ef4444);
-      color: white;
+      background: radial-gradient(circle at center, #ffe4e6 0%, #fbcfe8 100%);
     }
 
-    /* 点状网格背景 */
-    .bg-pattern {
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(circle at center, white 1px, transparent 1px);
-      background-size: 35px 35px;
-      opacity: 0.2;
-      pointer-events: none; /* 防止遮挡点击 */
-    }
-
-    /* 毛玻璃卡片 */
+    /* 伪装卡片 */
     .glass-card {
       position: relative;
       z-index: 10;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(40px);
-      -webkit-backdrop-filter: blur(40px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 40px;
-      padding: 3.5rem 3rem;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid #f43f5e;
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      box-shadow: 0 15px 35px rgba(244, 63, 94, 0.15);
       text-align: center;
-      max-width: 42rem;
+      max-width: 38rem;
       width: 90%;
       box-sizing: border-box;
+      transition: all 0.3s ease;
     }
 
-    /* 文本样式 */
     h1 {
-      font-size: 3.75rem;
-      font-weight: 900;
+      font-size: 2.2rem;
+      color: #e11d48;
       margin-top: 0;
       margin-bottom: 1.5rem;
-      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
 
-    .subtitle-1 {
-      font-size: 1.5rem;
-      line-height: 1.625;
+    .subtitle {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #4c0519;
+      margin-bottom: 2.5rem;
       opacity: 0.9;
-      margin: 0 0 0.75rem 0;
     }
 
-    .subtitle-2 {
-      font-size: 1.875rem;
-      font-weight: bold;
-      margin: 0 0 2.5rem 0;
-    }
-
-    /* 按钮容器与按钮 */
     .btn-group {
       display: flex;
       justify-content: center;
-      gap: 2rem;
+      gap: 1.5rem;
       flex-wrap: wrap;
+      margin-top: 20px;
     }
 
     button {
       outline: none;
       font-family: inherit;
-    }
-
-    .btn-accept {
-      background: white;
-      color: #db2777;
-      font-weight: 900;
-      padding: 1.25rem 2.5rem;
-      border-radius: 9999px;
-      font-size: 1.5rem;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      cursor: pointer;
       border: none;
-      transition: transform 0.2s ease;
-    }
-    .btn-accept:hover {
-      transform: scale(1.1);
-    }
-
-    .btn-think {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: white;
-      font-weight: bold;
-      padding: 1.25rem 2.5rem;
-      border-radius: 9999px;
-      font-size: 1.5rem;
+      border-radius: 999px;
+      font-size: 1.1rem;
+      padding: 0.9rem 2.5rem;
       cursor: pointer;
-      transition: background 0.2s ease;
-    }
-    .btn-think:hover {
-      background: rgba(0, 0, 0, 0.5);
+      font-weight: bold;
+      transition: all 0.2s ease;
     }
 
-    .tips {
-      margin-top: 2.5rem;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 0.875rem;
-      line-height: 2;
+    .btn-primary {
+      background: linear-gradient(135deg, #ec4899, #f43f5e);
+      color: white;
+      box-shadow: 0 4px 14px rgba(244, 63, 94, 0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 63, 94, 0.6);
     }
 
-    .copyright {
+    .btn-secondary {
+      background: #fff1f2;
+      color: #e11d48;
+      border: 1px solid #fda4af;
+    }
+
+    /* 恶搞输入框 */
+    .fake-input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #fbcfe8;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      color: #e11d48;
+      background: white;
+      box-sizing: border-box;
+      outline: none;
+      text-align: center;
+    }
+
+    /* 扫描动画 */
+    .radar-box {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 20px;
+      border: 3px solid #fda4af;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #fff1f2;
+    }
+    .radar-line {
       position: absolute;
-      bottom: 1.5rem;
-      font-size: 0.875rem;
-      color: rgba(255, 255, 255, 0.6);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(244,63,94,0), rgba(244,63,94,0.4));
+      animation: scan 2s linear infinite;
+      transform-origin: bottom center;
+    }
+    @keyframes scan {
+      0% { transform: translateY(-150px); }
+      100% { transform: translateY(150px); }
     }
 
-    /* 动画 */
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: .7; }
+    /* 权限复选框样式 */
+    .permission-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 1rem;
+      background: white;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      border: 1px solid #ffe4e6;
     }
-    
-    @keyframes floating {
-      from { transform: translateY(0px); }
-      to { transform: translateY(-20px); }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
     }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: #f43f5e;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+      transform: translateX(24px);
+    }
+
+    /* 粉色警告弹窗 */
+    .alert-popup {
+      position: absolute;
+      width: 280px;
+      background: #fff1f2;
+      border: 2px solid #ef4444;
+      border-radius: 16px;
+      padding: 1.2rem;
+      box-shadow: 0 20px 25px -5px rgba(159, 18, 57, 0.2);
+      color: #991b1b;
+      z-index: 99999;
+    }
+
+    .progress-bound {
+      width: 100%;
+      height: 16px;
+      background: #ffe4e6;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #fbcfe8;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #f43f5e, #db2777);
+      transition: width 0.1s linear;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translate(0, 0); }
+      10%, 30%, 50%, 70%, 90% { transform: translate(-10px, 0); }
+      20%, 40%, 60%, 80% { transform: translate(10px, 0); }
+    }
+    .shake-effect { animation: shake 0.4s ease-in-out; }
   </style>
 </head>
 <body>
 
-  <div class="main-container">
-    <div class="bg-pattern"></div>
-
-    <div class="glass-card">
-      <h1>💘 AI智能告白系统</h1>
-      <p class="subtitle-1">系统通过大数据分析、聊天记录追踪、朋友圈偷窥</p>
-      <p class="subtitle-2">认定你已经偷偷喜欢很久了 ❤️</p>
+  <div class="main-container" id="stageContainer">
+    <!-- 主卡片 -->
+    <div class="glass-card" id="mainCard">
+      <h1>🌸 520 情感账户核心资产审查</h1>
+      <p class="subtitle">
+        检测到您的IP地址在“深情领地”异常登录。<br>
+        为了您的财产与智商安全，请协助完成以下网络人格五轨审查。<br>
+        <span style="color:#e11d48; font-size:0.9rem; font-weight:bold;">* 拒绝验证将导致脱单功能永久锁定 *</span>
+      </p>
 
       <div class="btn-group">
-        <button id="btnAccept" class="btn-accept">我愿意 😳</button>
-        <button id="btnThink" class="btn-think">考虑一下 🤔</button>
+        <button id="btnYes" class="btn-primary">接受审查 ✨</button>
+        <button id="btnNo" class="btn-secondary">老子不验 🙅</button>
       </div>
-
-      <div class="tips">
-        ⚠ 温馨提示：点击“我愿意”成功率仅 0.0001%<br />
-        ⚠ 本系统已接入深情防沉迷机制<br />
-        ⚠ 单身用户禁止急眼
-      </div>
-    </div>
-
-    <div class="copyright">
-      © 2026 DeepLove AI · 全国单身联盟技术支持
     </div>
   </div>
 
   <script>
-    const randomMessages = [
-      '系统正在验证真心...',
-      '检测到恋爱脑浓度过高...',
-      'AI正在分析你的嘴硬程度...',
-      '爱情服务器已超载...',
-      '正在匹配你的舔狗等级...'
-    ];
+    const mainCard = document.getElementById('mainCard');
 
-    // 躲避按钮逻辑
-    const escapeButton = (e) => {
-      const btn = e.target;
-      const maxX = window.innerWidth - 150;
-      const maxY = window.innerHeight - 80;
-
-      const x = Math.max(0, Math.random() * maxX);
-      const y = Math.max(0, Math.random() * maxY);
-
-      btn.style.position = 'fixed';
-      btn.style.left = `${x}px`;
-      btn.style.top = `${y}px`;
-      btn.style.transform = `rotate(${Math.random() * 30 - 15}deg)`;
-      btn.style.zIndex = '9999';
+    // ==================== 关卡 1：拒绝者的无休止弹窗 ====================
+    let rejectCount = 0;
+    const initPrank = () => {
+      const btnNo = document.getElementById('btnNo');
+      if(!btnNo) return;
+      
+      const escapeAndPrank = (e) => {
+        rejectCount++;
+        if (rejectCount <= 3) {
+          const maxX = window.innerWidth - 150;
+          const maxY = window.innerHeight - 60;
+          btnNo.style.position = 'fixed';
+          btnNo.style.left = `${Math.max(20, Math.random() * maxX)}px`;
+          btnNo.style.top = `${Math.max(20, Math.random() * maxY)}px`;
+          btnNo.innerText = `点不到我 😜 (${rejectCount}/3)`;
+        } else {
+          triggerWarningPopups();
+        }
+      };
+      btnNo.addEventListener('mouseenter', escapeAndPrank);
+      btnNo.addEventListener('click', escapeAndPrank);
     };
 
-    // 假装加载逻辑
-    const fakeLoading = () => {
-      const overlay = document.createElement('div');
-      overlay.innerHTML = `
-        <div id="loadingBox" style="
-          position:fixed;
-          inset:0;
-          background:rgba(0,0,0,0.92);
-          display:flex;
-          flex-direction:column;
-          justify-content:center;
-          align-items:center;
-          z-index:99999;
-          color:white;
-        ">
-          <h1 style="font-size:42px;margin-bottom:30px;animation:none;">❤️ 恋爱系统启动中...</h1>
-          <div style="width:320px;height:22px;background:#333;border-radius:999px;overflow:hidden;">
-            <div id="bar" style="height:100%;width:0%;background:linear-gradient(90deg,#ff4d6d,#ff8fab);transition:width 0.2s;"></div>
-          </div>
-          <p id="loadingText" style="margin-top:20px;color:#aaa;font-size:18px;">${randomMessages[0]}</p>
+    function triggerWarningPopups() {
+      mainCard.classList.add('shake-effect');
+      setTimeout(() => mainCard.classList.remove('shake-effect'), 500);
+
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          const popup = document.createElement('div');
+          popup.className = 'alert-popup';
+          popup.innerHTML = `
+            <h3 style="margin:0;color:#ef4444;">🚨 严重警告 (Error_520)</h3>
+            <p style="font-size:0.9rem;color:#991b1b;line-height:1.5;margin:10px 0;">
+              检测到您正在强行嘴硬！拒绝配合审查将剥夺2026年度脱单资格！
+            </p>
+            <button onclick="this.parentElement.remove()" style="width:100%;background:#ef4444;color:white;padding:6px;border:none;border-radius:999px;font-size:0.9rem;cursor:pointer;font-weight:bold;">
+              我错了，马上配合 😭
+            </button>
+          `;
+          popup.style.left = `${Math.random() * (window.innerWidth - 280)}px`;
+          popup.style.top = `${Math.random() * (window.innerHeight - 150)}px`;
+          document.body.appendChild(popup);
+        }, i * 120);
+      }
+      const btnNo = document.getElementById('btnNo');
+      if(btnNo) {
+        btnNo.style.position = 'static';
+        btnNo.innerText = "我认输，我验证";
+        btnNo.onclick = startStage2;
+      }
+    }
+
+    document.getElementById('btnYes').onclick = startStage2;
+    initPrank();
+
+    // ==================== 关卡 2：打字机流氓控制（真心话流氓输入） ====================
+    function startStage2() {
+      document.querySelectorAll('.alert-popup').forEach(p => p.remove());
+      
+      mainCard.innerHTML = `
+        <h1>📝 第一轨：反傲娇内心剖析</h1>
+        <p class="subtitle" style="margin-bottom:1.5rem;">请在下方输入框内，如实输入你的【520年度脱单宣言】：</p>
+        <input type="text" id="typewriterInput" class="fake-input" placeholder="请在这里随意打字敲击键盘..." autocomplete="off">
+        <div class="btn-group">
+          <button id="btnStage2" class="btn-primary" style="opacity:0.5; cursor:not-allowed;" disabled>请先完成输入</button>
         </div>
       `;
 
-      document.body.appendChild(overlay);
+      const targetText = "本人自愿承认其实我是一个表面嘴硬、内心极度渴望恋爱的绝世大冤种，并申请向站长发放520巨额赞助。";
+      const inputEl = document.getElementById('typewriterInput');
+      const btnEl = document.getElementById('btnStage2');
+      let currentLength = 0;
 
-      const bar = overlay.querySelector('#bar');
-      const text = overlay.querySelector('#loadingText');
-      let progress = 0;
-
-      const timer = setInterval(() => {
-        progress += Math.random() * 15;
-        if(progress > 100) progress = 100;
+      // 劫持键盘输入
+      inputEl.addEventListener('keydown', (e) => {
+        e.preventDefault(); // 阻止用户真正输入的字符
         
-        bar.style.width = `${progress}%`;
-        text.innerText = randomMessages[Math.floor(Math.random() * randomMessages.length)];
-
-        if (progress >= 100) {
-          clearInterval(timer);
-
-          setTimeout(() => {
-            overlay.innerHTML = `
-              <div style="position:fixed;inset:0;background:rgba(0,0,0,0.92);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:99999;color:white;text-align:center;padding:20px;">
-                <h1 style="font-size:70px;margin:0;animation:none;">🤡</h1>
-                <h2 style="font-size:38px;margin-top:20px;">你居然真信了？</h2>
-                <p style="margin-top:15px;color:#999;font-size:20px;">
-                  本次520表白由“全国深情种协会”特别诈骗播出
-                </p>
-                <button id="continueBtn" style="
-                  margin-top:35px;
-                  padding:14px 40px;
-                  border:none;
-                  border-radius:999px;
-                  background:#ff4d6d;
-                  color:white;
-                  font-size:20px;
-                  cursor:pointer;
-                ">我不服，再试一次</button>
-              </div>
-            `;
-
-            overlay.querySelector('#continueBtn').onclick = () => {
-              overlay.remove();
-              trollDesktop();
-            };
-          }, 1200);
+        if (e.key === 'Backspace') {
+          if (currentLength > 0) {
+            currentLength--;
+            inputEl.value = targetText.substring(0, currentLength);
+          }
+        } else if (e.key.length === 1 || e.key === 'Process') { // 兼容中英文输入法敲击
+          if (currentLength < targetText.length) {
+            currentLength++;
+            inputEl.value = targetText.substring(0, currentLength);
+          }
         }
-      }, 280);
-    };
 
-    // 恶搞弹窗逻辑
-    const trollDesktop = () => {
-      const container = document.createElement('div');
-      container.style.position = 'fixed';
-      container.style.inset = '0';
-      container.style.zIndex = '999999';
-      container.style.background = 'linear-gradient(135deg,#111,#000)';
-      container.style.overflow = 'hidden';
+        if (currentLength >= targetText.length) {
+          btnEl.removeAttribute('disabled');
+          btnEl.style.opacity = '1';
+          btnEl.style.cursor = 'pointer';
+          btnEl.innerText = "承认事实，进入下一步 🤝";
+        }
+      });
 
-      document.body.appendChild(container);
+      btnEl.onclick = startStage3;
+    }
 
-      // 生成满屏弹窗
-      for (let i = 0; i < 25; i++) {
-        const popup = document.createElement('div');
-        popup.innerHTML = `
-          <div style="
-            width:260px;
-            background:white;
-            border-radius:20px;
-            box-shadow:0 10px 40px rgba(0,0,0,.4);
-            padding:18px;
-            color:black;
-          ">
-            <h3 style="margin:0;color:#ff4d6d;font-size:18px;">⚠ 恋爱警告</h3>
-            <p style="margin-top:10px;color:#444;line-height:1.5;font-size:14px;">
-              检测到用户存在严重恋爱幻想，请立即停止深情。
-            </p>
-            <button style="
-              margin-top:12px;
-              width:100%;
-              border:none;
-              background:black;
-              color:white;
-              padding:10px;
-              border-radius:12px;
-              cursor:pointer;
-            ">知道了（但下次还敢）</button>
-          </div>
-        `;
+    // ==================== 关卡 3：AI 偏好人脸透视（假面扫描） ====================
+    function startStage3() {
+      mainCard.innerHTML = `
+        <h1>📷 第二轨：AI 脸部多巴胺扫描</h1>
+        <p class="subtitle" style="margin-bottom:1.5rem;">系统正在尝试调用前置摄像头，分析您的面部异性吸引力指数...</p>
+        <div class="radar-box">
+          <div class="radar-line"></div>
+          <div style="font-size:50px; line-height:150px; text-align:center;">👤</div>
+        </div>
+        <p id="scanStatus" style="font-weight:bold; color:#db2777;">正在捕捉面部轮廓，请正对屏幕并保持微笑...</p>
+      `;
 
-        popup.style.position = 'absolute';
-        popup.style.left = Math.random() * (window.innerWidth - 260) + 'px';
-        popup.style.top = Math.random() * (window.innerHeight - 150) + 'px';
-        popup.style.animation = `floating ${1.5 + Math.random()}s infinite alternate ease-in-out`;
-        popup.style.animationDelay = `${Math.random()}s`;
+      const statusText = document.getElementById('scanStatus');
+      const phases = [
+        "正在扫描胶原蛋白流失速度...",
+        "正在分析单身狗特有的傲娇眼神...",
+        "正在测算嘴角向下微垂的倔强弧度...",
+        "扫描完成！"
+      ];
 
-        container.appendChild(popup);
-      }
+      phases.forEach((text, index) => {
+        setTimeout(() => {
+          if(statusText) statusText.innerText = text;
+          if(index === phases.length - 1) {
+            showScanResult();
+          }
+        }, (index + 1) * 1200);
+      });
+    }
 
-      // 躲避的关闭按钮
-      const endBtn = document.createElement('button');
-      endBtn.innerText = '关闭恶搞';
-      endBtn.style.position = 'fixed';
-      endBtn.style.bottom = '30px';
-      endBtn.style.left = '50%';
-      endBtn.style.transform = 'translateX(-50%)';
-      endBtn.style.padding = '16px 45px';
-      endBtn.style.border = 'none';
-      endBtn.style.borderRadius = '999px';
-      endBtn.style.background = '#ff4d6d';
-      endBtn.style.color = 'white';
-      endBtn.style.fontSize = '20px';
-      endBtn.style.cursor = 'pointer';
-      endBtn.style.zIndex = '9999999';
+    function showScanResult() {
+      mainCard.innerHTML = `
+        <h1>📊 扫描分析结果报告</h1>
+        <div style="text-align:left; background:white; padding:1.5rem; border-radius:12px; margin-bottom:1.5rem; border:1px solid #fbcfe8; line-height:1.8;">
+          🌸 <b>面部多巴胺浓度：</b> 0.001% (极度缺乏恋爱滋润)<br>
+          🌸 <b>傲娇/嘴硬判定：</b> 九段 (无药可救级别)<br>
+          🌸 <b>今日颜值评级：</b> 绝美/超帅 (但可惜目前是个单身贵族)
+        </div>
+        <button id="btnStage3" class="btn-primary">我不服，继续复核 💢</button>
+      `;
+      document.getElementById('btnStage3').onclick = startStage4;
+    }
 
-      endBtn.onmouseenter = escapeButton;
-      endBtn.onclick = () => {
-        container.innerHTML = `
-          <div style="
-            height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            flex-direction:column;
-            color:white;
-            text-align:center;
-          ">
-            <h1 style="font-size:90px;margin:0;animation:none;">🤣🤣🤣</h1>
-            <h2 style="font-size:45px;margin:20px 0;">520快乐，但你还是单身</h2>
-            <p style="margin-top:20px;color:#888;font-size:20px;">
-              截图发朋友圈效果更佳
-            </p>
-          </div>
-        `;
+    // ==================== 关卡 4：流氓全选隐私协议 ====================
+    function startStage4() {
+      mainCard.innerHTML = `
+        <h1>🛡️ 第三轨：单身联盟隐私授权</h1>
+        <p class="subtitle" style="margin-bottom:1.5rem;">为开启终极脱单绿色通道，请授权以下必要安全权限：</p>
+        
+        <div class="permission-item">
+          <span>允许系统自动清空下季度所有购物车 🛒</span>
+          <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
+        </div>
+        <div class="permission-item">
+          <span>允许公开您的朋友圈偷看及屏蔽记录 👁️</span>
+          <label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label>
+        </div>
+        <div class="permission-item" id="trapItem" style="position:relative;">
+          <span id="trapText">允许520当天无条件向站长发放节日红包 🧧</span>
+          <button id="btnToggleTrap" class="btn-secondary" style="padding:0.3rem 1rem; font-size:0.9rem; border-radius:6px;">取消勾选</button>
+        </div>
+
+        <button id="btnStage4" class="btn-primary" style="margin-top:20px; width:100%;">强制同意并提交审查 🚀</button>
+      `;
+
+      const btnToggle = document.getElementById('btnToggleTrap');
+      let toggleCount = 0;
+
+      btnToggle.onclick = () => {
+        toggleCount++;
+        if(toggleCount === 1) {
+          btnToggle.innerText = "拒绝失败";
+        } else if(toggleCount === 2) {
+          btnToggle.innerText = "你想得美";
+        } else {
+          btnToggle.style.display = "none";
+          document.getElementById('trapText').innerHTML = "允许520当天无条件向站长发放节日红包 🧧 <b style='color:#ef4444;'>(已强行锁定)</b>";
+        }
       };
 
-      container.appendChild(endBtn);
-    };
+      document.getElementById('btnStage4').onclick = startStage5;
+    }
 
-    // 绑定初始按钮事件
-    const btnAccept = document.getElementById('btnAccept');
-    const btnThink = document.getElementById('btnThink');
+    // ==================== 关卡 5：99% 卡死终极心跳 ====================
+    function startStage5() {
+      const loadingTexts = [
+        '正在向你的大脑植入520防渣隔离霜...',
+        '正在从太空卫星调取你的脱单风水方位...',
+        '系统检测到你已经开始抓狂了...',
+        '正在拼命解密你的心动对象...',
+        '由于您的魅力值过高，系统正在紧急扩容...'
+      ];
 
-    btnAccept.addEventListener('mouseenter', escapeButton);
-    btnAccept.addEventListener('click', escapeButton);
-    btnThink.addEventListener('click', fakeLoading);
+      mainCard.innerHTML = `
+        <h1>🔄 正在生成 520 终审人格报告</h1>
+        <div class="progress-bound" style="margin: 30px 0;">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <p id="progressText" style="color:#db2777; font-weight:bold;">准备初始化数据结构...</p>
+      `;
+
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+      
+      let width = 0;
+      let textIndex = 0;
+
+      const interval = setInterval(() => {
+        if (width < 82) {
+          width += Math.random() * 5;
+        } else if (width >= 82 && width < 99) {
+          width += Math.random() * 0.4; // 极度变慢
+        }
+
+        progressBar.style.width = `${width}%`;
+        
+        if (Math.random() > 0.88 && textIndex < loadingTexts.length) {
+          progressText.innerText = loadingTexts[Math.floor(Math.random() * loadingTexts.length)];
+        }
+
+        // 卡死在 99%
+        if (width >= 99) {
+          clearInterval(interval);
+          progressBar.style.width = '99%';
+          progressText.innerHTML = `⚠️ <span style="color:#ef4444; font-weight:bold;">Fatal Error：由于用户颜值突破天际，核心机房被萌烧了！</span>`;
+          
+          setTimeout(() => {
+            triggerFinalShock();
+          }, 2600);
+        }
+      }, 90);
+    }
+
+    // ==================== 终极降维打击（小丑反转） ====================
+    function triggerFinalShock() {
+      mainCard.style.maxWidth = "42rem";
+      mainCard.style.border = "3px solid #ec4899";
+      mainCard.style.boxShadow = "0 0 50px rgba(236, 72, 153, 0.4)";
+
+      mainCard.innerHTML = `
+        <h1 style="font-size: 6rem; margin: 0;">🤡</h1>
+        <h2 style="color:#db2777; font-size:2.5rem; margin-top:10px;">密保验证失败！</h2>
+        <p style="font-size:1.25rem; line-height:1.8; color:#4c0519; margin:20px 0;">
+          经过五轨全方位深度测试，系统最终判定：<br>
+          <span style="color:#e11d48; font-weight:bold;">【嘴硬天花板】 【自恋大宗师】 【全自动发红包机】</span><br>
+          折腾了这么久，原来小丑竟是你自己！
+        </p>
+        <div style="background: rgba(244,63,94,0.06); padding: 15px; border-radius: 12px; text-align: left; font-size: 0.95rem; color: #881337; line-height: 1.6; border: 1px dashed #fbcfe8;">
+          📢 <b style="color:#e11d48;">粉色特赦令：</b><br>
+          鉴于你如此有耐心地闯完了所有恶搞关卡，特此免除本年度单身罚款。520 没什么送你的，送你一个大大的清醒大白眼！哈哈哈520快乐！
+        </div>
+        <button id="btnEnd" class="btn-primary" style="margin-top: 25px; width: 100%;">
+          我不服！我要截图找你算账 😤
+        </button>
+      `;
+
+      document.getElementById('btnEnd').addEventListener('click', () => {
+        alert("🚨 情感中心提示：\n截图已秘密保存到你的脑海中！\n好啦不闹了，祝你 520 每天都开开心心，今天也要保持快乐哈！");
+      });
+    }
   </script>
 </body>
 </html>
